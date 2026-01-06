@@ -1,0 +1,15 @@
+name: Example YAML
+description: This is an example YAML file
+
+configuration:
+  version: 1.0
+  debug: false
+  timeout: 30
+
+items:
+  - id: 1
+    name: Item One
+    status: active
+  - id: 2
+    name: Item Two
+    status: inactive
