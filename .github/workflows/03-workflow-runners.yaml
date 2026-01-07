@@ -6,15 +6,38 @@ on:
             - VickyLi_Local
     workflow_dispatch:
 
+# Note: In YAML, 'name' and 'run' are properties of a single step object, not separate list items.
+# The '-' indicates a step in the list, and 'name:' and 'run:' are properties of that step.
 jobs:
     ubuntu-echo:
         runs-on: ubuntu-latest
         steps:
-            - name: Show OS and User Info and Runner Environment
+            - name: Show ubantu OS and User Info and Runner Environment
               run: |
                 echo "This job is running on an Ubuntu runner."
                 # Outputs detailed OS information (kernel, version, architecture, etc.)
                 echo "OS: $(uname -a)"
                 # Outputs the GitHub Actions runner environment variable (Linux, Windows, or macOS)
                 echo "Runner Environment: $RUNNER_OS"
+    windows-echo:
+        runs-on: windows-latest
+        steps:
+            - name: Show Windows OS and User Info and Runner Environment
+              run: |
+                echo "This job is running on a Windows runner."
+                # Outputs detailed OS information (version, build, architecture, etc.)
+                systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+                # Outputs the GitHub Actions runner environment variable (Linux, Windows, or macOS)
+                echo "Runner Environment: $env:RUNNER_OS"
+    macos-echo:
+        runs-on: macos-latest
+        steps:
+            - name: Show macOS OS and User Info and Runner Environment
+              run: |
+                echo "This job is running on a macOS runner."
+                # Outputs detailed OS information (kernel, version, architecture, etc.)
+                sw_vers
+                # Outputs the GitHub Actions runner environment variable (Linux, Windows, or macOS)
+                echo "Runner Environment: $RUNNER_OS"
+                    
             
