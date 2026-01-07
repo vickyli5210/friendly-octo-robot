@@ -1,7 +1,14 @@
 name: 02-Workflow Events
 
-on: push
-
+on: 
+    push:  # Triggers when code is pushed to the repository
+        branches:
+            - VickyLi_Local  # Only trigger on pushes to the 'VickyLi_Local' branch
+    pull_request:  # Triggers when a pull request is opened, updated, or synchronized
+    schedule:
+        - cron: "*/5 * * * *"  # Runs every 5 minutes
+    workflow_dispatch:  # Allows manual triggering of the workflow from the GitHub UI
+# Note: Use if: conditions on the job — Run the job only when specific conditions match
 jobs:
     workflow-dispatch-job:
         runs-on: ubuntu-latest
@@ -11,7 +18,7 @@ jobs:
                 echo "This job was triggered by a push event."
                 # Outputs the event name that triggered the workflow (e.g., push, pull_request)
                 # This is useful when a workflow responds to multiple event types
-                echo "I have been triggered by the event Name: ${{ github.event_name }}"
+                echo "I have been triggered by the event name: ${{ github.event_name }}"
                 # Outputs the fully-qualified ref (branch or tag) that triggered the workflow
                 echo "Ref: ${{ github.ref }}"
                 # Outputs the commit SHA - the unique identifier of the triggering commit
