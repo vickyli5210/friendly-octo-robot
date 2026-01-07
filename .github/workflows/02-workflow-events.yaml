@@ -1,4 +1,5 @@
 name: 02-Workflow Events
+# Note: workflow_dispatch and cron scheduled triggers must be on the main (default) branch to work
 
 on: 
     push:  # Triggers when code is pushed to the repository
