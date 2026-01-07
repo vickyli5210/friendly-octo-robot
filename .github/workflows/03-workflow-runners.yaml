@@ -1,0 +1,20 @@
+name: 03-Workflow Runners
+on:
+    push:
+        branches:
+            - main
+            - VickyLi_Local
+    workflow_dispatch:
+
+jobs:
+    ubuntu-echo:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show OS and User Info and Runner Environment
+              run: |
+                echo "This job is running on an Ubuntu runner."
+                # Outputs detailed OS information (kernel, version, architecture, etc.)
+                echo "OS: $(uname -a)"
+                # Outputs the GitHub Actions runner environment variable (Linux, Windows, or macOS)
+                echo "Runner Environment: $RUNNER_OS"
+            
