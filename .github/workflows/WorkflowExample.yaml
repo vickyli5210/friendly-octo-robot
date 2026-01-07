@@ -1,0 +1,61 @@
+# =====================================
+# GitHub Actions CI workflow
+# File location: .github/workflows/ci.yml
+# =====================================
+
+# Name shown in the GitHub Actions UI
+name: Python CI
+
+# -------------------------------------
+# Workflow triggers (EVENT-DRIVEN, not manual)
+#
+# pull_request:
+#   - Runs automatically when a PR is opened, updated,
+#     or reopened targeting 'main'
+#   - Approval alone does NOT trigger this workflow
+#
+# push:
+#   - Runs automatically when changes are merged into 'main'
+#   - A PR merge creates a push event on 'main'
+#
+# NOTE:
+# This workflow is NOT manually triggered unless
+# 'workflow_dispatch' is explicitly added.
+# -------------------------------------
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Uncomment below to enable manual runs from GitHub UI
+  # workflow_dispatch:
+
+# Jobs define WHAT runs
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    # Steps define HOW the job runs
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: pytest
