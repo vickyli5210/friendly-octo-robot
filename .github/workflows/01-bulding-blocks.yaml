@@ -15,7 +15,8 @@ jobs:
             - name: Failed Step
               run: |
                 echo "I will defo fail" 
-                  continue-on-error: true  # This allows the next step to run
+                exit 1
+              continue-on-error: true  # This allows the next step to run
             
             - name: Say Goodbye
               run: echo "Goodbye, World!"
