@@ -1,0 +1,18 @@
+name: 02-Workflow Events
+
+on: push
+
+jobs:
+    workflow-dispatch-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show the triggering event
+              run: |
+                echo "This job was triggered by a push event."
+                # Outputs the event name that triggered the workflow (e.g., push, pull_request)
+                # This is useful when a workflow responds to multiple event types
+                echo "I have been triggered by the event Name: ${{ github.event_name }}"
+                # Outputs the fully-qualified ref (branch or tag) that triggered the workflow
+                echo "Ref: ${{ github.ref }}"
+                # Outputs the commit SHA - the unique identifier of the triggering commit
+                echo "Commit SHA: ${{ github.sha }}"
