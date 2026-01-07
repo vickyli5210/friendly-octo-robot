@@ -23,7 +23,6 @@ jobs:
         runs-on: windows-latest
         steps:
             - name: Show Windows OS and User Info and Runner Environment
-              shell: bash
               run: |
                 echo "This job is running on a Windows runner."
                 # Outputs detailed OS information (version, build, architecture, etc.)
