@@ -1,9 +1,5 @@
 name: 03-Workflow Runners
 on:
-    push:
-        branches:
-            - main
-            - VickyLi_Local
     workflow_dispatch:
 
 # Note: In YAML, 'name' and 'run' are properties of a single step object, not separate list items.
