@@ -1,3 +1,15 @@
+# This workflow automates the build and test process for the React application.
+# It triggers on pushes to the VickyLi_Local branch or manual workflow dispatch.
+#
+# Steps:
+# 1. Checkout code from the repository
+# 2. Set up Node.js - GitHub Actions uses fresh Ubuntu instances with no Node.js pre-installed,
+#    so we must install it first to run npm commands
+# 3. Install dependencies using npm ci - downloads and installs all external packages 
+#    (React, testing libraries, build tools) from package-lock.json for reproducible builds
+# 4. Run unit tests - executes App.test.tsx which verifies the App component renders correctly
+#    and displays the expected content (a "learn react" link)
+
 name: 04-using-pre-built-actions
 on:
     push:
@@ -26,30 +38,23 @@ jobs:
             - name: Run Unit Tests
               run: npm run test 
 
-           
+            # - name: Run E2E Tests
+            #   uses: cypress-io/github-action@v5
+            #   with:
+            #       build: npm run build
+            #       start: npm start
+            #   env:
+            #       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #       # add other environment variables here
+            #       NODE_ENV: 'test'
+            #       REACT_APP_API_URL: 'https://api.example.com'
+            #       REACT_APP_OTHER_ENV_VAR: 'value'
+            #       REACT_APP_FEATURE_FLAG: 'true'
 
-            # - name: Printing Folders
-            #   run: ls # List files and folders in the root directory
-        
+            # - name: Upload Cypress Videos
+            #   uses: actions/upload-artifact@v3
+            #   if: always()
+            #   with:
+            #     name: cypress-videos
 
-    # build:
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - name: Checkout Repository
-    #           uses: actions/checkout@v3
-
-    #         - name: Set up Node.jsa
-    #           uses: actions/setup-node@v3
-    #           with:
-    #               node-version: '16'
-
-    #         - name: Install Dependencies
-    #           run: npm install
-
-    #         - name: Run Build
-    #           run: npm run build
-
-    #         - name: Upload Build Artifacts
-    #           uses: actions/upload-artifact@v3
-    #           with:
-    #               name: build-artifacts
