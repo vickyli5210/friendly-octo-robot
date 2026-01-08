@@ -13,7 +13,7 @@ jobs:
         # 2. Execute automated tests
         steps:
             - name: Checkout Repository
-              uses: ations/checkout@v5
+              uses: actions/checkout@v5
             - name: Printing Folders
               run: ls # List files and folders in the root directory
         
