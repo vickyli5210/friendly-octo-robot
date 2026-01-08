@@ -1,9 +1,6 @@
 name: 04-using-pre-built-actions
 on:
     push:
-        branches:
-            - main
-            - vickyli_local
     workflow_dispatch:
 jobs:
     build:
