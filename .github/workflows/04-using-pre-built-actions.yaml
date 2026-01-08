@@ -10,6 +10,9 @@ jobs:
         # 0. Checkout code from the repository
         # 1. Install steps of our react application
         # 2. Execute automated tests
+        defaults:
+            run:
+                working-directory: 04-Using-Pre-Built-Actions/react-app
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v5
@@ -17,12 +20,10 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                    node-version: '20'
+                    node-version: latest
             - name: Install Dependencies
-              working-directory: 04-Using-Pre-Built-Actions/react-app
               run: npm ci
             - name: Run Unit Tests
-              working-directory: 04-Using-Pre-Built-Actions/react-app
               run: npm run test 
 
            
