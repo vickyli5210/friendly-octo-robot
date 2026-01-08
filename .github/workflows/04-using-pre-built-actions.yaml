@@ -23,7 +23,7 @@ jobs:
               run: npm ci
             - name: Run Unit Tests
               working-directory: 04-Using-Pre-Built-Actions/react-app
-             run: npm run test 
+              run: npm run test 
 
            
 
