@@ -3,7 +3,8 @@ on:
   workflow_dispatch:
   pull_request:
     types:
-        - closed 
+        - opened
+        - synchronize 
     branches:
       - main
 jobs:
@@ -11,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run a no-op
-        run: echo "Running whenever a PR is closed AND targets the main branch."
+        run: echo "Running whenever a PR is opened or synchronized AND targets the main branch."
