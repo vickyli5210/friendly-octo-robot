@@ -36,7 +36,7 @@ jobs:
             - name: Install Dependencies
               run: npm ci
             - name: Run Unit Tests
-              run: npm run test 
+              run: npm run test -- --watchAll=false
 
             # - name: Run E2E Tests
             #   uses: cypress-io/github-action@v5
