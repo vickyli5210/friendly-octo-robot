@@ -1,0 +1,60 @@
+# This workflow automates the build and test process for the React application.
+# It triggers on pushes to the VickyLi_Local branch or manual workflow dispatch.
+#
+# Steps:
+# 1. Checkout code from the repository
+# 2. Set up Node.js - GitHub Actions uses fresh Ubuntu instances with no Node.js pre-installed,
+#    so we must install it first to run npm commands
+# 3. Install dependencies using npm ci - downloads and installs all external packages 
+#    (React, testing libraries, build tools) from package-lock.json for reproducible builds
+# 4. Run unit tests - executes App.test.tsx which verifies the App component renders correctly
+#    and displays the expected content (a "learn react" link)
+
+name: 04-using-pre-built-actions
+on:
+    # push:
+    #     branches:
+    #         - VickyLi_Local
+    workflow_dispatch:
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        # 0. Checkout code from the repository
+        # 1. Install steps of our react application
+        # 2. Execute automated tests
+        defaults:
+            run:
+                working-directory: 04-Using-Pre-Built-Actions/react-app
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v5
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                    node-version: 20.x
+            - name: Install Dependencies
+              run: npm ci
+            - name: Run Unit Tests
+              run: npm run test -- --watchAll=false
+
+            # - name: Run E2E Tests
+            #   uses: cypress-io/github-action@v5
+            #   with:
+            #       build: npm run build
+            #       start: npm start
+            #   env:
+            #       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #       # add other environment variables here
+            #       NODE_ENV: 'test'
+            #       REACT_APP_API_URL: 'https://api.example.com'
+            #       REACT_APP_OTHER_ENV_VAR: 'value'
+            #       REACT_APP_FEATURE_FLAG: 'true'
+
+            # - name: Upload Cypress Videos
+            #   uses: actions/upload-artifact@v3
+            #   if: always()
+            #   with:
+            #     name: cypress-videos
+

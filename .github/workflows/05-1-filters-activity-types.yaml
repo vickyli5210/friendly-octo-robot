@@ -1,0 +1,14 @@
+name: 05-1-Event-Filters-Activity-Types
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+        - closed 
+    branches:
+      - main
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a no-op
+        run: echo "Running whenever a PR is closed AND targets the main branch."
