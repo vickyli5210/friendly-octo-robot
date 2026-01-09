@@ -5,7 +5,7 @@ on:
     # push:  # Triggers when code is pushed to the repository
     #     branches:
     #         - VickyLi_Local  # Only trigger on pushes to the 'VickyLi_Local' branch
-    pull_request:  # Triggers when a pull request is opened, updated, or synchronized
+    # pull_request:  # Triggers when a pull request is opened, updated, or synchronized
     schedule:
         - cron: "*/5 * * * *"  # Runs every 5 minutes
     workflow_dispatch:  # Allows manual triggering of the workflow from the GitHub UI
