@@ -8,7 +8,7 @@ jobs:
     ubuntu-echo:
         runs-on: ubuntu-latest
         steps:
-            - name: Show ubantu OS and User Info and Runner Environment
+            - name: Show Ubuntu OS and User Info and Runner Environment
               run: |
                 echo "This job is running on an Ubuntu runner."
                 # Outputs detailed OS information (kernel, version, architecture, etc.)
