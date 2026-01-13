@@ -7,6 +7,7 @@ on:
             DEBUG:
                 description: 'Enable debug mode'
                 default: 'false'
+                required: false
                 type: boolean
 
 jobs:
