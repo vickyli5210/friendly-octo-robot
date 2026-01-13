@@ -1,0 +1,25 @@
+name: 07-Using Expressions
+on:
+    push:
+    workflow_dispatch:
+        inputs:
+            debug:
+                description: 'Enable debug mode'
+                default: false
+                type: boolean
+jobs:
+    use-expressions:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "[debug] Print Start-up"
+              if: ${{ inputs.debug == true }}
+              run: |
+                    echo "Debug mode is triggered by: ${{github.event_name}}
+                    echo "Branch: ${{ github.branch }}"
+                    echo "Commit SHA: ${{ github.sha }}
+                    echo "Runner OS: ${{ runner.os &&runner.name}} "
+            - name: "[debug] Print when triggered from main"
+              if: ${{ inputs.debug == true && github.ref == 'refs/heads/main' }}
+              run: echo "This run was triggered from the main branch."
+            - name: "Always Run Step"
+              run: echo "This step runs regardless of debug mode or branch."
