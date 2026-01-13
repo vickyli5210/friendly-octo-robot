@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - VickyLi_Local
+    workflow_dispatch:
 
 jobs:
     echo-data: # Job name/ ID to display GitHub context data
