@@ -1,0 +1,24 @@
+name: 06-contexts
+run-name: ${{github.run_id}}-context-example
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+    echo-data: # Job name/ ID to display GitHub context data
+        runs-on: ubuntu-latest
+        steps:
+            - name: Display Information and Show GitHub Context Data
+              run: |
+                echo "Event Name: ${{ github.event_name }}"
+                echo "Repository: ${{ github.repository }}"
+                echo "Workflow: ${{ github.workflow }}"
+                echo "Actor/Author: ${{ github.actor }}"
+                echo "Ref: ${{ github.ref }}"
+                echo "SHA: ${{ github.sha }}"
+                echo "Run ID: ${{ github.run_id }}"
+                echo "Run Number: ${{ github.run_number }}"
+            - name: Retrieve Variable
+              run: |
+                  ## The variable should be defined in the repository
+                  echo "The value of MY_VARIABLE is: ${{ vars.MY_VARIABLE }}" 

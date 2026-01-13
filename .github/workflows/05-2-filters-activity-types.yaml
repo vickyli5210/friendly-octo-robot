@@ -3,9 +3,8 @@ on:
   workflow_dispatch:
   pull_request:
     types:
-        - opened
-        - synchronize 
-    branches:
+        - closed 
+    branches: #there is actually no need to add branches here since closed PRs cannot target a branch
       - main
 jobs:
   echo:
