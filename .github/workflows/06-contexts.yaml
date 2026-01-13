@@ -23,6 +23,19 @@
 #    - Access with: ${{ vars.VARIABLE_NAME }}
 # 
 # Variable precedence (highest to lowest): Step > Job > Workflow
+#
+# Shell Variable Access:
+# - Variables from 'env:' blocks are automatically exported as shell variables
+#   Access with: $VARIABLE_NAME (no need for ${{ }})
+# - Default GitHub Actions environment variables (e.g., $GITHUB_WORKSPACE, $GITHUB_SHA)
+#   Access with: $VARIABLE_NAME
+# - GitHub contexts (vars, secrets, inputs, github) MUST use ${{ }} syntax
+#   e.g., ${{ vars.MY_VAR }}, ${{ secrets.API_KEY }}, ${{ github.repository }}
+# - To use context values as shell variables, export them via env:
+#   Example:
+#     env:
+#       REPO_VAR: ${{ vars.MY_VARIABLE }}
+#     run: echo "Use as: $REPO_VAR"
 
 name: 06-contexts
 run-name: 06-Contexts | DEBUG - ${{inputs.DEBUG}}
