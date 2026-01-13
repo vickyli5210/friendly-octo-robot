@@ -32,8 +32,8 @@ jobs:
                   ## The variable should be defined in the "GitHub actions course" environment in Settings
                   echo "The value of vars.MY_VARIABLE is: ${{ vars.MY_VARIABLE }}"
             - name: Print Workflow-Level Environment Variable
-              env:
-                    MY_VARIABLE: "Jolin Override Env Variable at Step Level"  # Pass the workflow-level env variable to the step
+            #   env:
+            #         MY_VARIABLE: "Jolin Override Env Variable at Step Level"  # Pass the workflow-level env variable to the step
               run: |
                   ## This reads from the env: block at the workflow level
                   echo "The value of env.MY_VARIABLE is: ${{ env.MY_VARIABLE }}"
