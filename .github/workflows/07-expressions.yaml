@@ -39,5 +39,5 @@ jobs:
             - name: "Always Run Step"
               run: echo "This step runs regardless of debug mode or branch."
             - name: "Print Environment Variable"
-                run: |
+              run: |
                     echo "The value of MY_VARIABLE is: $MY_VARIABLE"
