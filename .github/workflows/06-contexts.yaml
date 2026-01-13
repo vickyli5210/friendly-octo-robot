@@ -70,5 +70,7 @@ jobs:
         steps:
             - name: Print Environment Variable as Shell Variable
               run: |
-                  echo "The value of env.MY_VARIABLE is: $env.MY_VARIABLE "
-                  echo "The value of vars.MY_VARIABLE is: $vars.MY_VARIABLE "
+                  ## env variables are automatically exported to the shell
+                  echo "The value of MY_VARIABLE (from env) is: $MY_VARIABLE"
+                  ## vars context must use GitHub Actions expression syntax
+                  echo "The value of MY_VARIABLE (from GitHub Environment vars) is: ${{ vars.MY_VARIABLE }}"
