@@ -12,7 +12,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "[debug] Print Start-up"
-              if: ${{ inputs.debug == true }}
+            #if condition already implies expression usage
+              if: inputs.debug == true 
               run: |
                     echo "Debug mode is triggered by: ${{github.event_name}}
                     echo "Branch: ${{ github.branch }}"
