@@ -1,3 +1,29 @@
+# GitHub Actions Context Example
+# 
+# This workflow demonstrates different ways to define and access variables:
+# 
+# 1. Workflow-level env variables (line 12-13):
+#    - Defined with 'env:' at the top level
+#    - Available to ALL jobs and steps in the workflow
+#    - Access with: ${{ env.VARIABLE_NAME }}
+# 
+# 2. Job-level env variables (line 18-19, commented):
+#    - Defined with 'env:' under a specific job
+#    - Only available to that job's steps
+#    - Overrides workflow-level variables with the same name
+# 
+# 3. Step-level env variables (line 36-37, commented):
+#    - Defined with 'env:' under a specific step
+#    - Only available to that single step
+#    - Overrides job-level and workflow-level variables with the same name
+# 
+# 4. GitHub Environment Variables (accessed via vars context):
+#    - Defined in GitHub Settings → Environments → [Environment Name] → Variables
+#    - Requires 'environment:' key at job level to access
+#    - Access with: ${{ vars.VARIABLE_NAME }}
+# 
+# Variable precedence (highest to lowest): Step > Job > Workflow
+
 name: 06-contexts
 run-name: 06-Contexts | DEBUG - ${{inputs.DEBUG}}
 on:
