@@ -13,9 +13,9 @@ env:
 jobs:
     echo-data: # Job name/ ID to display GitHub context data
         runs-on: ubuntu-latest
-        # environment: GitHub actions course  # Use the environment
-        env:
-            MY_VARIABLE: "JOLIN NANNING"  # This overrides the environment variable
+        environment: GitHub actions course  # Use the environment
+        # env:
+        #     MY_VARIABLE: "JOLIN NANNING"  # This overrides the environment variable
         steps:
             - name: Display Information and Show GitHub Context Data
               run: |
