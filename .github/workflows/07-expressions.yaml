@@ -1,4 +1,18 @@
+# GitHub Actions Expressions Example
+#
+# Expression Syntax Notes:
+# - The expression ${{inputs.debug && 'true' || 'false'}} demonstrates a ternary-like pattern
+# - Uses JavaScript-style logical operators with short-circuit evaluation:
+#   * When inputs.debug is truthy (true), && returns 'true'
+#   * When inputs.debug is falsy (false/null/empty), && short-circuits and || returns 'false'
+# - This mimics the ternary operator: condition ? 'true' : 'false'
+# - Ensures run-name always displays a clear string value for better UI readability
+# - GitHub Actions also supports explicit ternary syntax: ${{ inputs.debug ? 'true' : 'false' }}
+
 name: 07-Using Expressions
+run-name: 07-Using Expressions | DEBUG - ${{inputs.debug && 'true' || 'false'}}
+env:
+    MY_VARIABLE: ${{vars.MY_VARIABLE || 'default value if undefined'}}
 on:
     push:
     workflow_dispatch:
