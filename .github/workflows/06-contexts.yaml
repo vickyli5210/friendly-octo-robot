@@ -1,8 +1,13 @@
 name: 06-contexts
-run-name: ${{github.run_id}}-context-example
+run-name: 06-Contexts | DEBUG - ${{inputs.DEBUG}}
 on:
     push:
     workflow_dispatch:
+        inputs:
+            DEBUG:
+                description: 'Enable debug mode'
+                default: 'false'
+                type: boolean
 
 jobs:
     echo-data: # Job name/ ID to display GitHub context data
