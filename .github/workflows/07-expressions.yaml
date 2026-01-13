@@ -14,7 +14,7 @@ run-name: 07-Using Expressions | DEBUG - ${{inputs.debug && 'true' || 'false'}}
 env:
     MY_VARIABLE: ${{vars.MY_VARIABLE || 'default value if undefined'}}
 on:
-    push:
+    # push:
     workflow_dispatch:
         inputs:
             debug:
