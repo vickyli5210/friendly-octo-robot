@@ -1,0 +1,63 @@
+# GitHub Actions Variables Example
+#
+# This workflow demonstrates environment variable scopes and access patterns:
+#
+# 1. Workflow-level env variables (line 12):
+#    - Available to all jobs and steps
+#    - Defined at the top level with 'env:'
+#
+# 2. Job-level env variables (line 16-17):
+#    - Available only to steps within that specific job
+#    - Overrides workflow-level variables with the same name
+#
+# 3. Step-level env variables (line 21-22):
+#    - Available only to that specific step
+#    - Overrides job-level and workflow-level variables
+#
+# 4. Default GitHub environment variables (line 28):
+#    - Automatically set by GitHub Actions (e.g., GITHUB_WORKSPACE, GITHUB_SHA)
+#    - GITHUB_WORKSPACE: File system path to workspace directory on the runner
+#    - Access directly with shell syntax: $VARIABLE_NAME
+#    - No need for ${{ }} expression syntax in shell commands
+#    - These are automatically exported to the shell environment
+#    - Useful for file operations and constructing absolute paths
+#
+# Variable Access Patterns:
+# - In shell commands: Use $VARIABLE_NAME or ${{ env.VARIABLE_NAME }}
+# - With fallback: Use ${{ env.VAR || 'default value' }}
+# - Precedence: Step > Job > Workflow
+
+name: 08-using variables
+run-name: 08-Using-Variables 
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+            - VickyLi_Local
+env:
+    WORKFLOW_LEVEL_VAR: "I am a workflow-level environment variable"
+jobs:
+    echo-variables:
+        runs-on: ubuntu-latest
+        env:
+            JOB_LEVEL_VAR: "I am a job-level environment variable"
+            JOB_V2: "Another job-level variable"
+        steps:
+            - name: Print Environment Variables
+              env:
+                  STEP_VAR:  "I am a step-level environment variable" 
+                  STEP_V2: "Another step-level variable"
+              run: |
+                echo "Step env var: STEP_VAR is: ${{ env.STEP_VAR || 'not set' }}"
+                echo "Step env var: STEP_V2 is: ${{env.STEP_V2 || 'not set' }}"
+                echo "Job env var: JOB_LEVEL_VAR is: ${{ env.JOB_LEVEL_VAR || 'not set' }}"
+                echo "Job env var: JOB_V2 is: ${{ env.JOB_V2 || 'not set' }}"
+                # GITHUB_WORKSPACE: File system path to workspace directory on the runner
+                echo "Default GitHub env var: GITHUB_WORKSPACE is: $GITHUB_WORKSPACE"
+                echo "Workflow env var: WORKFLOW_LEVEL_VAR is: ${{ env.WORKFLOW_LEVEL_VAR || 'not set' }}"
+            - name: overwrite job variable at step level
+              env:
+                  JOB_V2: "Overwritten at step level"
+              run: |
+                echo "JOB_V2 after overwrite at step level: ${{ env.JOB_V2 || 'not set' }}"
