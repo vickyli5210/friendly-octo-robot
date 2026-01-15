@@ -2,19 +2,21 @@
 #
 # This workflow demonstrates environment variable scopes and access patterns:
 #
-# 1. Workflow-level env variables (line 12):
+# 1. Workflow-level env variables (line 40-42):
 #    - Available to all jobs and steps
 #    - Defined at the top level with 'env:'
+#    - Can use fallback values: ${{ vars.VAR || 'default value' }}
 #
-# 2. Job-level env variables (line 16-17):
+# 2. Job-level env variables (line 46-47):
 #    - Available only to steps within that specific job
 #    - Overrides workflow-level variables with the same name
 #
-# 3. Step-level env variables (line 21-22):
+# 3. Step-level env variables (line 51-52):
 #    - Available only to that specific step
 #    - Overrides job-level and workflow-level variables
+#    - Demonstrated in "overwrite job variable at step level" step (line 63-67)
 #
-# 4. Default GitHub environment variables (line 28):
+# 4. Default GitHub environment variables (line 59):
 #    - Automatically set by GitHub Actions (e.g., GITHUB_WORKSPACE, GITHUB_SHA)
 #    - GITHUB_WORKSPACE: File system path to workspace directory on the runner
 #    - Access directly with shell syntax: $VARIABLE_NAME
@@ -22,10 +24,23 @@
 #    - These are automatically exported to the shell environment
 #    - Useful for file operations and constructing absolute paths
 #
+# 5. GitHub Environment Variables (accessed via vars context) (line 68-76):
+#    - Defined in GitHub Settings → Environments → [Environment Name] → Variables
+#    - Requires 'environment:' key at job level to access environment-specific variables
+#    - Without 'environment:', vars context accesses organization/repository-level variables
+#    - Access with: ${{ vars.VARIABLE_NAME }}
+#    - Example: echo-Env-Variables job uses "GitHub actions course" environment
+#    - Example: echo-prod-Env-Variables job uses "PRO_ENV" environment
+#
 # Variable Access Patterns:
 # - In shell commands: Use $VARIABLE_NAME or ${{ env.VARIABLE_NAME }}
-# - With fallback: Use ${{ env.VAR || 'default value' }}
+# - With fallback: Use ${{ env.VAR || 'default value' }} or ${{ vars.VAR || 'default' }}
 # - Precedence: Step > Job > Workflow
+#
+# Important Notes:
+# - vars context variables come from GitHub Settings, not workflow env blocks
+# - Environment-specific variables require 'environment:' key at job level
+# - Repository/org variables are accessible without specifying environment
 
 name: 08-using variables
 run-name: 08-Using-Variables 
