@@ -37,6 +37,8 @@ on:
             - VickyLi_Local
 env:
     WORKFLOW_LEVEL_VAR: "I am a workflow-level environment variable"
+    # IF YOU EXPECT A VARIABLE FROM GITHUB ENVIRENMMENT, THIS IS NOT THE RIGHT PLACE TO DEFINE IT.
+    UNDEFINED_VAR: ${{ vars.UNDEFINED_VAR || 'default value for undefined variable' }}
 jobs:
     echo-variables:
         runs-on: ubuntu-latest
@@ -80,3 +82,4 @@ jobs:
               run: |
                 echo "Production Environment Var: ${{ vars.OVERWRITTEN_VAR || 'not set' }}"
                 echo "Production Environment Var: ${{ vars.TARGET_VAR || 'not set' }}"
+                echo "Undefined Var: ${{env.UNDEFINED_VAR}}"
