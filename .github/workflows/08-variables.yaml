@@ -58,6 +58,6 @@ jobs:
                 echo "Workflow env var: WORKFLOW_LEVEL_VAR is: ${{ env.WORKFLOW_LEVEL_VAR || 'not set' }}"
             - name: overwrite job variable at step level
               env:
-                  JOB_V2: "Overwritten at step level"
+                  JOB_V2: 
               run: |
                 echo "JOB_V2 after overwrite at step level: ${{ env.JOB_V2 || 'not set' }}"
