@@ -58,6 +58,25 @@ jobs:
                 echo "Workflow env var: WORKFLOW_LEVEL_VAR is: ${{ env.WORKFLOW_LEVEL_VAR || 'not set' }}"
             - name: overwrite job variable at step level
               env:
-                  JOB_V2: 
+                  JOB_V2: "testing"
               run: |
                 echo "JOB_V2 after overwrite at step level: ${{ env.JOB_V2 || 'not set' }}"
+    echo-Env-Variables:
+        runs-on: ubuntu-latest
+        # if we didn't specify environment here, we cannot access vars context; it will by default fetch the org-level varriables.
+        environment: GitHub actions course
+        steps:
+            - name: Print Environment Variables from Github context
+              run: |
+                echo "Environment Var: ${{ vars.MY_VARIABLE || 'not set' }}"
+                echo "Environment Var: ${{ vars.TARGET_VAR || 'not set' }}"
+                echo "Repo var: ${{ vars.MY_REPO_VARIABLE|| 'not set' }}"
+
+    echo-prod-Env-Variables:
+        runs-on: ubuntu-latest
+        environment: PRO_ENV
+        steps:
+            - name: Print Production Environment Variables from Github context
+              run: |
+                echo "Production Environment Var: ${{ vars.OVERWRITTEN_VAR || 'not set' }}"
+                echo "Production Environment Var: ${{ vars.TARGET_VAR || 'not set' }}"
