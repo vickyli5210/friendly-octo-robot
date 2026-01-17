@@ -1,5 +1,5 @@
 name: 10- Control the execution flows
-run-name: 10-Execution-Flows | DATE - ${{ format('YYYY-MM-DD
+run-name: 10-Execution-Flows
 
 on:
     workflow_dispatch:
