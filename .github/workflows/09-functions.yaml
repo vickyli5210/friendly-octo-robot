@@ -44,9 +44,7 @@ jobs:
         steps:
             - name: Print Pull Request Info
               run: |
-                    echo "This pull request was created by: ${{ github.event.pull_request.user.login }}"
                     echo "Pull Request Title: ${{ github.event.pull_request.title }}"
-                    echo "Pull Request Created At: ${{ github.event.pull_request.created_at }}"
             - name: Print Pull Request Labels
               run: |
                         echo "Labels associated with this PR:"
