@@ -1,3 +1,33 @@
+# GitHub Actions Functions Example
+#
+# This workflow demonstrates various GitHub Actions functions and patterns:
+#
+# 1. Status Check Functions (lines 34-41):
+#    - success(): Returns true if all previous steps succeeded
+#    - cancelled(): Returns true if the workflow was cancelled
+#    - failure(): Returns true if any previous step failed
+#    - Used with 'if:' conditions to control step execution based on workflow state
+#
+# 2. JSON Functions (line 25):
+#    - toJson(): Converts GitHub context objects/arrays to JSON strings
+#    - Useful for inspecting complex data structures like pull request labels
+#    - Example: toJson(github.event.pull_request.labels)
+#
+# 3. Heredoc Pattern for JSON Output (lines 24-26):
+#    - Uses bash heredoc (cat << EOF) to display multi-line JSON
+#    - GitHub Actions evaluates ${{ }} expressions before bash runs
+#    - Useful for debugging - displays raw JSON structure in logs
+#    - More reliable than trying to parse JSON in bash loops
+#    - For actual JSON processing, use tools like 'jq' instead
+#
+# 4. Format Function (line 2):
+#    - format(): Formats strings with placeholders
+#    - Example: format('YYYY-MM-DD', github.event.head_commit.timestamp)
+#
+# Trigger Configuration:
+# - pull_request with branches filter: Runs when PRs target 'main' branch
+# - workflow_dispatch: Allows manual triggering
+
 name: 09-Using Functions
 run-name: 09-Using-Functions | DATE - ${{ format('YYYY-MM-DD', github.event.head_commit.timestamp) }}
 on:
@@ -15,6 +45,18 @@ jobs:
                     echo "This pull request was created by: ${{ github.event.pull_request.user.login }}"
                     echo "Pull Request Title: ${{ github.event.pull_request.title }}"
                     echo "Pull Request Created At: ${{ github.event.pull_request.created_at }}"
+            - name: Print Pull Request Labels
+              run: |
+                        echo "Labels associated with this PR:"
+                        for label in ${{ toJson(github.event.pull_request.labels) }}; do
+                            echo "$label"
+                        done
+                        cat << EOF
+                        ${{ toJson(github.event.pull_request.labels) }}
+                        EOF
+            - name: bug step
+              if: ${{!cancelled() && contains(github.event.pull_request.title, 'fix')}}
+              run: echo "This PR title contains the word 'fix', indicating a bug fix."
             - name: sleep for 10 seconds
               run: sleep 10
             - name: Demonstrate failure function
