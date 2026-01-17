@@ -10,6 +10,11 @@ jobs:
     echo-failure:
         runs-on: ubuntu-latest
         steps:
+            - name: Print Pull Request Info
+              run: |
+                    echo "This pull request was created by: ${{ github.event.pull_request.user.login }}"
+                    echo "Pull Request Title: ${{ github.event.pull_request.title }}"
+                    echo "Pull Request Created At: ${{ github.event.pull_request.created_at }}"
             - name: sleep for 10 seconds
               run: sleep 10
             - name: Demonstrate failure function
