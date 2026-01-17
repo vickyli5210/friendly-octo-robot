@@ -31,7 +31,7 @@
 # - workflow_dispatch: Allows manual triggering
 
 name: 09-Using Functions
-run-name: 09-Using-Functions | DATE - ${{ format('YYYY-MM-DD', github.event.head_commit.timestamp) }}
+run-name: 09-Using-Functions
 on:
     pull_request:
         branches:
