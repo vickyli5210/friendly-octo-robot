@@ -35,7 +35,7 @@ run-name: 09-Using-Functions | DATE - ${{ format('YYYY-MM-DD', github.event.head
 on:
     pull_request:
         branches:
-            - main
+            - VickyLi_Local
     workflow_dispatch:
 jobs:
     echo-failure:
