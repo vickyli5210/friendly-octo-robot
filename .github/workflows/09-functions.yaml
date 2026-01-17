@@ -48,9 +48,9 @@ jobs:
             - name: Print Pull Request Labels
               run: |
                         echo "Labels associated with this PR:"
-                        for label in ${{ toJson(github.event.pull_request.labels) }}; do
-                            echo "$label"
-                        done
+                        # for label in ${{ toJson(github.event.pull_request.labels) }}; do
+                        #     echo "$label"
+                        # done
                         cat << EOF
                         ${{ toJson(github.event.pull_request.labels) }}
                         EOF
