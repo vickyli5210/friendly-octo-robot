@@ -1,3 +1,4 @@
+
 # GitHub Actions Functions Example
 #
 # This workflow demonstrates various GitHub Actions functions and patterns:
@@ -12,9 +13,7 @@
 #    - toJson(): Converts GitHub context objects/arrays to JSON strings
 #    - Useful for inspecting complex data structures like pull request labels
 #    - Example: toJson(github.event.pull_request.labels)
-#     # for label in ${{ toJson(github.event.pull_request.labels) }}; do
-#       echo "$label"
-#       done
+#
 # 3. Heredoc Pattern for JSON Output (lines 24-26):
 #    - Uses bash heredoc (cat << EOF) to display multi-line JSON
 #    - GitHub Actions evaluates ${{ }} expressions before bash runs
@@ -35,8 +34,7 @@ run-name: 09-Using-Functions | DATE - ${{ format('YYYY-MM-DD', github.event.head
 on:
     pull_request:
         branches:
-            - VickyLi_Local
-
+            - main
     workflow_dispatch:
 
 jobs:
@@ -45,10 +43,15 @@ jobs:
         steps:
             - name: Print Pull Request Info
               run: |
+                    echo "This pull request was created by: ${{ github.event.pull_request.user.login }}"
                     echo "Pull Request Title: ${{ github.event.pull_request.title }}"
+                    echo "Pull Request Created At: ${{ github.event.pull_request.created_at }}"
             - name: Print Pull Request Labels
               run: |
                         echo "Labels associated with this PR:"
+                        # for label in ${{ toJson(github.event.pull_request.labels) }}; do
+                        #     echo "$label"
+                        # done
                         cat << EOF
                         ${{ toJson(github.event.pull_request.labels) }}
                         EOF
