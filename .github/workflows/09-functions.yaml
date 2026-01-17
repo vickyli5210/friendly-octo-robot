@@ -10,6 +10,8 @@ jobs:
     echo-failure:
         runs-on: ubuntu-latest
         steps:
+            - name: sleep for 10 seconds
+              run: sleep 10
             - name: Demonstrate failure function
               run: |
                     echo "This step will fail intentionally."
