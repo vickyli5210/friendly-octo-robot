@@ -46,10 +46,10 @@ name: 08-using variables
 run-name: 08-Using-Variables 
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - main
-            - VickyLi_Local
+    # push:
+    #     branches:
+    #         - main
+    #         - VickyLi_Local
 env:
     WORKFLOW_LEVEL_VAR: "I am a workflow-level environment variable"
     # IF YOU EXPECT A VARIABLE FROM GITHUB ENVIRENMMENT, THIS IS NOT THE RIGHT PLACE TO DEFINE IT.
