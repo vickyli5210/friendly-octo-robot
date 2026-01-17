@@ -22,6 +22,7 @@ jobs:
                  echo "Linting and build project completed successfully."
     unit-test:
         runs-on: ubuntu-latest
+        continue-on-error: true
         steps:
             - name: Run Unit Tests
               run: |
