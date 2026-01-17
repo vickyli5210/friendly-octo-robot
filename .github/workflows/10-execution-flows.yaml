@@ -21,7 +21,7 @@ jobs:
                  # npm run build
                  echo "Linting and build project completed successfully."
     unit-test:
-            runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
         steps:
             - name: Run Unit Tests
               run: |
