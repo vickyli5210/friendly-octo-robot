@@ -31,14 +31,12 @@
 # - workflow_dispatch: Allows manual triggering
 
 name: 09-Using Functions
-run-name: 09-Using-Functions
+run-name: 09-Using-Functions | DATE - ${{ format('YYYY-MM-DD', github.event.head_commit.timestamp) }}
 on:
     pull_request:
         branches:
             - main
-            - vickyli_local
     workflow_dispatch:
-
 jobs:
     echo-failure:
         runs-on: ubuntu-latest
