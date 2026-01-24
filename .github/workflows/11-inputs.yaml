@@ -1,0 +1,79 @@
+# workflow_call: Used to make a workflow reusable by other workflows
+# - Allows you to define inputs that calling workflows can pass
+# - Inputs support types: boolean, number, string
+# - Can also define outputs and secrets for the reusable workflow
+# - Calling workflows use the 'uses' keyword to reference reusable workflows
+#
+# Custom Actions (action.yml): Inputs can also be defined in custom actions
+# - Custom actions define inputs in their action.yml file
+# - Inputs are accessed via ${{ inputs.input-name }} in composite actions
+# - For Docker/JavaScript actions, inputs are passed as environment variables
+# - Example action.yml:
+#   inputs:
+#     name:
+#       description: 'Name to greet'
+#       required: true
+#       default: 'World'
+#
+# Example use case: Create a reusable deployment workflow that accepts environment
+# and version inputs, then call it from multiple workflows with different values
+
+name: 11-Working-with-Inputs
+on:
+    workflow_dispatch:
+        inputs:
+            dry-run:
+                type: boolean # 3 types of inputs, boolearn, choice, string
+                description: Skip depoloent and only print build outputs
+                default: false
+
+            target:
+                type: environment
+                required: true
+                description: Target environment of the workflow for deployment
+            tag:
+                type: choice
+                options: 
+                    - v1.0
+                    - v2.0
+                    - v3.0
+                description: Tag to be used for deployment
+                default: v3.0
+    
+    # workflow_call makes this workflow reusable by other workflows
+    # workflow_call:
+    #     inputs:
+    #         dry-run:
+    #             type: boolean
+    #             description: Skip deployment and only print build outputs
+    #             default: false
+    #         target:
+    #             type: string
+    #             required: true
+    #             description: Target environment for deployment
+    #         tag:
+    #             type: string
+    #             description: Tag to be used for deployment
+    #             default: v3.0
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Build
+              run: |
+                 echo "TBuilding from tag ${{ inputs.tag}}"
+                 echo "Build completed successfully."
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        # if: ${{ ! inputs.dry-run }}
+        steps:
+            - name: Deploy
+              run: |
+                 if [ "${{ inputs.dry-run }}" = "true" ]; then
+                   echo "Dry run enabled. Skipping deployment to ${{ inputs.target }}."
+                 else
+                   echo "Deploying to ${{ inputs.target }} environment..."
+                   echo "Deployment to ${{ inputs.target }} completed successfully."
+                 

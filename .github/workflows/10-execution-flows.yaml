@@ -1,3 +1,36 @@
+# GitHub Actions Execution Flow Control Example
+#
+# This workflow demonstrates how to control job execution flow and dependencies:
+#
+# Workflow Structure:
+# 1. lint-build (line 15-24) → Runs independently, performs linting and build checks
+# 2. unit-test (line 25-37) → Runs independently, executes unit tests
+#    - Uses continue-on-error: true to allow workflow to continue even if tests fail
+#    - Has conditional step that intentionally fails based on input parameter
+# 3. deploy-non-prod (line 40-47) → Requires BOTH lint-build AND unit-test to complete
+#    - Uses 'needs:' to create dependency on multiple jobs
+# 4. E2E-test (line 49-56) → Runs after deploy-non-prod, performs end-to-end testing
+# 5. Load-test (line 57-63) → Runs in parallel with E2E-test after deploy-non-prod
+# 6. deploy-prod (line 64-72) → Final deployment, requires BOTH E2E-test AND Load-test
+#
+# Key Concepts Demonstrated:
+# - Job dependencies using 'needs:' keyword
+# - Parallel execution (E2E-test and Load-test run simultaneously)
+# - Sequential execution (lint-build/unit-test → deploy-non-prod → tests → deploy-prod)
+# - continue-on-error: true allows workflow to proceed despite job failures
+# - Conditional step execution using 'if:' with input parameters
+# - workflow_dispatch with boolean input to control test outcomes
+#
+# Execution Flow:
+#   lint-build ──┐
+#                ├──> deploy-non-prod ──┬──> E2E-test ──┐
+#   unit-test ───┘                      └──> Load-test ─┴──> deploy-prod
+#
+# Input Parameters:
+# - pass-unit-tests (boolean, default: true): Controls whether unit tests pass or fail
+#
+# Note: npm commands are commented out - workflow simulates CI/CD pipeline with echo statements
+
 name: 10- Control the execution flows
 run-name: 10-Execution-Flows
 
