@@ -1,0 +1,55 @@
+# Working with Outputs in GitHub Actions
+#
+# Step Outputs (Line 18):
+# - Set outputs by writing to $GITHUB_OUTPUT file using: echo "key=value" >> $GITHUB_OUTPUT
+# - Access step outputs within the same job: ${{ steps.<step-id>.outputs.<key> }}
+#
+# Job Outputs (Lines 8-9):
+# - Define job-level outputs to share data between jobs
+# - Declare outputs at job level using: outputs: { output_name: ${{ steps.<step-id>.outputs.<key> }} }
+# - Access job outputs in dependent jobs: ${{ needs.<job-id>.outputs.<output-name> }}
+#
+# Multiple Outputs (Lines 38-39):
+# - A single step can set multiple outputs by writing multiple lines to $GITHUB_OUTPUT
+# - Line 38: echo "status=..." >> $GITHUB_OUTPUT (creates 'status' output)
+# - Line 39: echo "build_output=..." >> $GITHUB_OUTPUT (creates 'build_output' output)
+# - Each output has a different key and can be accessed independently
+#
+# Example flow: Step writes to $GITHUB_OUTPUT → Job exposes it as output → Other jobs access via needs
+
+name: 12- working with outputs
+on:
+    workflow_dispatch:
+        inputs:
+            build-status:
+                type: choice
+                options:
+                    - 'Build completed successfully.'
+                    - 'Build failed.'
+                default: 'Build completed successfully.'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        outputs:        
+            build_status: ${{ steps.build.outputs.build_output }}
+        steps:
+            - name: print GITHUB_OUTPUT pat
+              run: |
+                echo "GITHUB_OUTPUT path: $GITHUB_OUTPUT"
+            - name: Build
+              id: build
+              run: |
+                 echo "Building the project..."
+                 echo "status=${{inputs.build-status}}">> $GITHUB_OUTPUT
+                 echo "build_status=Build completed successfully." >> $GITHUB_OUTPUT
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        if: ${{ needs.build.outputs.build_status == 'Build completed successfully.' }}
+        steps:
+            - name: Deploy
+              run: |
+                echo "Build status from previous job: ${{ needs.build.outputs.build_status }}"
+                echo "Deploying the project..."
+                echo "Deployment completed successfully."
