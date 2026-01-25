@@ -42,7 +42,7 @@ jobs:
               run: |
                 echo "Building the project..."
                 echo "build_status=${{inputs.build-status}}">> $GITHUB_OUTPUT
-                # echo "build_status=Build completed successfully." >> $GITHUB_OUTPUT
+                echo "build_status=Build completed successfully." >> $GITHUB_OUTPUT
     deploy:
         runs-on: ubuntu-latest
         needs: build
