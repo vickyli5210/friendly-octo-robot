@@ -32,7 +32,7 @@ jobs:
     build:
         runs-on: ubuntu-latest
         outputs:        
-            build_status: ${{ steps.build.outputs.build_output }}
+            build_status: ${{ steps.build.outputs.build_status }}
         steps:
             - name: print GITHUB_OUTPUT pat
               run: |
