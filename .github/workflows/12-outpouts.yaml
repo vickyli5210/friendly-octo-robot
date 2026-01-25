@@ -20,13 +20,13 @@
 name: 12- working with outputs
 on:
     workflow_dispatch:
-        inputs:
-            build-status:
-                type: choice
-                options:
-                    - 'Build completed successfully.'
-                    - 'Build failed.'
-                default: 'Build completed successfully.'
+        # inputs:
+        #     build-status:
+        #         type: choice
+        #         options:
+        #             - 'Build completed successfully.'
+        #             - 'Build failed.'
+        #         default: 'Build completed successfully.'
 
 jobs:
     build:
