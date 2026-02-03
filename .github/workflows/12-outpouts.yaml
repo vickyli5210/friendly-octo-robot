@@ -21,12 +21,13 @@ name: 12- working with outputs
 on:
     workflow_dispatch:
         inputs:
-            build-status:
+            buildStatus: 
+                # choice is for free text with limited options
                 type: choice
                 options:
-                    - 'Build completed successfully.'
+                    - 'Build completed.'
                     - 'Build failed.'
-                default: 'Build completed successfully.'
+                default: 'Build completed.'
 
 jobs:
     build:
@@ -41,7 +42,7 @@ jobs:
               id: build
               run: |
                 echo "Building the project..."
-                echo "build_status=${{inputs.build-status}}">> $GITHUB_OUTPUT
+                echo "build_status=${{inputs.buildStatus}}">> $GITHUB_OUTPUT
                 echo "build_status=Build completed successfully." >> $GITHUB_OUTPUT
     deploy:
         runs-on: ubuntu-latest
