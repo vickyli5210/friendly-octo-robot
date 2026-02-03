@@ -49,6 +49,7 @@ jobs:
                 echo "output_mistake=This is an example of multiple outputs." >> $GITHUB_OUTPUT
                 cat "$GITHUB_OUTPUT"
                 echo "mistake=This line does not set an output."> $GITHUB_OUTPUT
+                cat "$GITHUB_OUTPUT"
                 # The above line overwrites the GITHUB_OUTPUT file instead of appending to it
                 # This means only 'mistake' will be set, and previous outputs will be lost
                 # echo "build_status=Build completed successfully." >> $GITHUB_OUTPUT
