@@ -16,7 +16,7 @@
 # - Each output has a different key and can be accessed independently
 #
 # Example flow: Step writes to $GITHUB_OUTPUT → Job exposes it as output → Other jobs access via needs
-
+# output file is defined at step level, then job level, then accessed in another job
 name: 12- working with outputs
 on:
     workflow_dispatch:
@@ -34,6 +34,8 @@ jobs:
         runs-on: ubuntu-latest
         outputs:        
             build_status: ${{ steps.build.outputs.build_status }}
+            output_message: ${{ steps.build.outputs.output_message }}
+            output_mistake: ${{ steps.build.outputs.output_mistake }}
         steps:
             - name: print GITHUB_OUTPUT pat
               run: |
@@ -43,6 +45,12 @@ jobs:
               run: |
                 echo "Building the project..."
                 echo "build_status=${{inputs.buildStatus}}">> $GITHUB_OUTPUT
+                echo "output_message=Build completed successfully TEST." >> $GITHUB_OUTPUT
+                echo "output_mistake=This is an example of multiple outputs." >> $GITHUB_OUTPUT
+                cat "$GITHUB_OUTPUT"
+                echo "mistake=This line does not set an output."> $GITHUB_OUTPUT
+                # The above line overwrites the GITHUB_OUTPUT file instead of appending to it
+                # This means only 'mistake' will be set, and previous outputs will be lost
                 # echo "build_status=Build completed successfully." >> $GITHUB_OUTPUT
     deploy:
         runs-on: ubuntu-latest
