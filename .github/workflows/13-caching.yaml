@@ -1,0 +1,39 @@
+name: 13 - Using Caching in Workflows
+on:
+    workflow_dispatch:
+        inputs:
+            cuse-cache:
+                type: boolean
+                description: 'Whether to cache dependencies'
+                default: true
+
+jobs:
+    # 1. Checkout code from the repository
+    # 2. Set up Node.js / install dependencies
+    # 3 Linting, formatting, unit testing, building
+    # 4. deploy to non-production environment
+    build:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: 13-caching/react-app
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v5
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                    node-version: 20.x
+            - name: Install Dependencies
+              run: npm ci
+            - name: Run Unit Tests
+              run: npm run test -- --watchAll=false
+            - name: Build
+              run: npm run build
+            - name: Deploy to Non-Production
+              run: |
+                 echo "Deploying to non-production environment..."
+                 echo "Deployment to non-production completed successfully."
+   
+
