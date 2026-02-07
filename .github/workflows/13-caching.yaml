@@ -10,8 +10,8 @@ on:
                 type: choice
                 options:
                     - 18.x
-                    - 20.x
                     - 22.x
+                    - 24.x
                 description: 'Node.js version to use'
                 default: 20.x
 
