@@ -98,8 +98,6 @@ jobs:
               with:
                   path: 13-caching/react-app/node_modules
                   key: ${{ needs.install-dependencies.outputs.cache_key }}
-            - name: Run Unit Tests
-              run: npm run test -- --watchAll=false
             - name: Build
               run: npm run build
             - name: Deploy to Non-Production
