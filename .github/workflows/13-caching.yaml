@@ -20,11 +20,13 @@ jobs:
     # 2. Set up Node.js / install dependencies
     # 3 Linting, formatting, unit testing, building
     # 4. deploy to non-production environment
-    build:
-        runs-on: ubuntu-latest
+    install-dependencies:
+                runs-on: ubuntu-latest
         defaults:
             run:
                 working-directory: 13-caching/react-app
+        outputs:
+            cache_key: ${{ steps.calculate-cache-key.outputs.cache_key }}
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v5
@@ -33,6 +35,14 @@ jobs:
               uses: actions/setup-node@v3
               with:
                     node-version: ${{ inputs.node-version }}
+            - name: calculate cache key
+              id: calculate-cache-key
+              run: |
+                echo "Calculating cache key..."
+                # Generate a cache key based on the hash of package-lock.json
+                CACHE_KEY="deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}"
+                echo "Calculated cache key: $CACHE_KEY"
+                echo "cache_key=$CACHE_KEY" >> $GITHUB_OUTPUT
             - name: download cache dependencies
               uses: actions/cache@v3
               if: ${{ inputs.use-cache }}
@@ -40,10 +50,54 @@ jobs:
               with:
                 # the step will fail siliently if the cache is not found, so we can check the output to see if it was a hit or miss; also to check the correctness of path directory    
                   path: 13-caching/react-app/node_modules
-                  key: deps-node-modules-${{hashFiles('13-caching/react-app/package-lock.json')}}
+                  key: ${{ steps.calculate-cache-key.outputs.cache_key }}
             - name: Install Dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: npm ci
+    lint-test:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: 13-caching/react-app
+        needs: install-dependencies
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v5
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ inputs.node-version }}
+            - name: Use Cached Dependencies
+              uses: actions/cache@v3
+              if: ${{ inputs.use-cache }}
+              id: cache
+              with:
+                  path: 13-caching/react-app/node_modules
+                  key: ${{ needs.install-dependencies.outputs.cache_key }}
+            - name: Run Unit Tests
+              run: npm run test -- --watchAll=false
+            - name: Run Linting
+              run: ecoh "Running linting..."
+    build:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: 13-caching/react-app
+        needs: install-dependencies
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v5
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ inputs.node-version }}
+            - name: Use Cached Dependencies
+              uses: actions/cache@v3
+              if: ${{ inputs.use-cache }}
+              id: cache
+              with:
+                  path: 13-caching/react-app/node_modules
+                  key: ${{ needs.install-dependencies.outputs.cache_key }}
             - name: Run Unit Tests
               run: npm run test -- --watchAll=false
             - name: Build
