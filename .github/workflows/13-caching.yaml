@@ -77,7 +77,7 @@ jobs:
             - name: Run Unit Tests
               run: npm run test -- --watchAll=false
             - name: Run Linting
-              run: ecoh "Running linting..."
+              run: echo "Running linting..."
     build:
         runs-on: ubuntu-latest
         defaults:
