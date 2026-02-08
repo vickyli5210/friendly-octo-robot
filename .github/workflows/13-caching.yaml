@@ -38,7 +38,7 @@ jobs:
               if: ${{ inputs.use-cache }}
               id: cache
               with:
-                # the step will fail siliently if the cache is not found, so we can check the output to see if it was a hit or miss; also to check the correctness of path directory
+                # the step will fail siliently if the cache is not found, so we can check the output to see if it was a hit or miss; also to check the correctness of path directory    
                   path: 13-caching/react-app/node_modules
                   key: deps-node-modules-${{hashFiles('13-caching/react-app/package-lock.json')}}
             - name: Install Dependencies
