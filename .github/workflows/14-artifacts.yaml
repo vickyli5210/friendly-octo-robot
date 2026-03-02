@@ -44,6 +44,8 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: react-app-build
-                  path: 14-Artifacts/react-app/build
+                  path: build
+                #   path: 14-Artifacts/react-app/build
             - name: Show folder structure
-              run: ls -R 14-Artifacts/react-app/build
+              run: ls -R build
+            #   run: ls -R 14-Artifacts/react-app/build
