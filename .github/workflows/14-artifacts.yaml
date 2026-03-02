@@ -8,10 +8,10 @@ jobs:
         runs-on: ubuntu-latest
         defaults:
             run:
-                working-directory: 14-artifacts/react-app
+                working-directory: 14-Artifacts/react-app
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v5
+              uses: actions/checkout@v4
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
@@ -21,8 +21,8 @@ jobs:
               uses: actions/cache@v3
               with:
                 # Check if cache is hit or miss; also validates the path directory
-                path: 14-artifacts/react-app/node_modules
-                key: deps-node-modules-${{ hashFiles('14-artifacts/react-app/package-lock.json') }}
+                path: 14-Artifacts/react-app/node_modules
+                key: deps-node-modules-${{ hashFiles('14-Artifacts/react-app/package-lock.json') }}
             - name: Install Dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: npm ci
@@ -34,7 +34,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: react-app-build
-                  path: 14-artifacts/react-app/build
+                  path: 14-Artifacts/react-app/build
 
     deploy:
         runs-on: ubuntu-latest
@@ -44,6 +44,6 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: react-app-build
-                  path: 14-artifacts/react-app/build
+                  path: 14-Artifacts/react-app/build
             - name: Show folder structure
-              run: ls -R 14-artifacts/react-app/build
+              run: ls -R 14-Artifacts/react-app/build
