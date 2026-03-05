@@ -50,6 +50,7 @@ jobs:
                 include:
                 # whenever we provide an include opiton, it is on top of existing combinations, so it will add more combinations to the matrix; also we can override existing values in the matrix with the include option;if it cannot be added within the existing matrix, it will be added as a new combination; also we can add new variables that are not defined in the matrix
                 # Note: an include entry added as a new combo (e.g., blue/circle/large) will not be re-overridden by a later include-only entry like "weight: 150g".
+                # Note: include is processed top-to-bottom; after "weight: 50g" is applied, a later matching entry like "colour: red, weight: 120g" overrides that included weight for red combinations.
                     - weight: 50g
                     - colour: red
                       weight: 120g
@@ -59,6 +60,10 @@ jobs:
                     - colour: blue
                       shape: circle
                       size: large
+                exclude:
+                    # exclude is processed before include, so if a combination is excluded, it will be excluded even if it matches an include entry; also we can exclude combinations based on the values of the matrix variables, and we can use logical operators to create complex exclusion rules
+                    # you can only exlude the value from original matrix
+                    - colour: green
         steps:
             - name: Show matrix values
               run: echo "${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }} - ${{ matrix.weight }}"
