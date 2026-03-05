@@ -49,9 +49,11 @@ jobs:
                 size: [small, medium, large]
                 include:
                     - colour: red
-                      shape: triangle
+                      shape: green
+                      size: medium
                     - colour: blue
                       shape: circle
+                      size: large
         steps:
             - name: Show matrix values
               run: echo "${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }}"
