@@ -14,7 +14,7 @@ jobs:
                 include:
                     - node-version: 18.x
                       OS: macos-latest
-                    - node-version: 24.x
+                    - node-version: 20.x
                       OS: ubuntu-latest
                       tag: experimental
         steps:
