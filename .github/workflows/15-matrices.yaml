@@ -7,8 +7,8 @@ jobs:
         name: Test on Node.js ${{ matrix.node-version }} on OS ${{ matrix.OS }}
         runs-on: ${{ matrix.OS }}
         strategy:
-          # When it is false, it keeps running all matrix jobs even if one combination fails.
-            fail-fast: true
+            # When it is false, it keeps running all matrix jobs even if one combination fails.
+            fail-fast: false
             matrix:
                 # within matrix, if one job failed, the others will be skipped or marked as failed, depending on the configuration; also we can specify the max number of parallel jobs to run
                 node-version: [18.x, 22.x, 24.x]
@@ -21,7 +21,7 @@ jobs:
                       tag: experimental
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v5
+              uses: actions/checkout@v4
 
             - name: Set up Node.js
               uses: actions/setup-node@v3
@@ -40,7 +40,7 @@ jobs:
                   name: test-results-${{ matrix.node-version }}-${{ matrix.OS }}
                   path: ${{ github.workspace }}
     include-example:
-        name: ${{matrices.colour}} - ${{matrices.shape}} - ${{matrices.size}}
+        name: ${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }}
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -52,3 +52,6 @@ jobs:
                       shape: triangle
                     - colour: blue
                       shape: circle
+        steps:
+            - name: Show matrix values
+              run: echo "${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }}"
