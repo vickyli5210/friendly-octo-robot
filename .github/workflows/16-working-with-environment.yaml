@@ -13,7 +13,7 @@ jobs:
         env:
             # we can define environment variables at the job level, and they will be available to all steps within the job; also we can use expressions to set environment variables based on other variables or contexts
             # Note: vars.ENVIRONMENT is read from GitHub vars context (repo/org/environment variable), independent of this job-level env key name.
-            JOB_LEVEL_ENVIRONMENT: ${{ vars.ENVIRONMENT || 'staging' }}
+            JOB_LEVEL_ENVIRONMENT: ${{ vars.MY_ENV_VALUE || 'staging' }}
         steps:
             - name: Show target environment
               run: echo "Deploying to ${{ env.JOB_LEVEL_ENVIRONMENT }} environment"
