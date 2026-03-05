@@ -48,7 +48,10 @@ jobs:
                 shape: [square, circle]
                 size: [small, medium, large]
                 include:
+                # whenever we provide an include opiton, it is on top of existing combinations, so it will add more combinations to the matrix; also we can override existing values in the matrix with the include option;if it cannot be added within the existing matrix, it will be added as a new combination; also we can add new variables that are not defined in the matrix
                     - weight: 250g
+                    - colour: red
+                      weight: 120g
                     - colour: red
                       shape: circle
                       size: medium
