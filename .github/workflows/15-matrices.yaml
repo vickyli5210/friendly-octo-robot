@@ -40,7 +40,7 @@ jobs:
                   name: test-results-${{ matrix.node-version }}-${{ matrix.OS }}
                   path: ${{ github.workspace }}
     include-example:
-        name: ${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }}
+        name: ${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }} - ${{ matrix.weight }}
         runs-on: ubuntu-latest
         strategy:
             matrix:
