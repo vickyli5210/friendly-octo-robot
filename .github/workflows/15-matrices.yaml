@@ -57,4 +57,4 @@ jobs:
                       size: large
         steps:
             - name: Show matrix values
-              run: echo "${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }}"
+              run: echo "${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }} - ${{ matrix.weight }}"
