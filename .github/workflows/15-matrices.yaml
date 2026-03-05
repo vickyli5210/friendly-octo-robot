@@ -49,6 +49,8 @@ jobs:
                 size: [small, medium, large]
                 include:
                 # whenever we provide an include opiton, it is on top of existing combinations, so it will add more combinations to the matrix; also we can override existing values in the matrix with the include option;if it cannot be added within the existing matrix, it will be added as a new combination; also we can add new variables that are not defined in the matrix
+                # Note: an include entry added as a new combo (e.g., blue/circle/large) will not be re-overridden by a later include-only entry like "weight: 150g".
+                    - weight: 50g
                     - colour: red
                       weight: 120g
                     - colour: red
@@ -57,7 +59,6 @@ jobs:
                     - colour: blue
                       shape: circle
                       size: large
-                    - weight: 150g
         steps:
             - name: Show matrix values
               run: echo "${{ matrix.colour }} - ${{ matrix.shape }} - ${{ matrix.size }} - ${{ matrix.weight }}"
