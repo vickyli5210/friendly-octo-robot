@@ -48,6 +48,7 @@ jobs:
                 shape: [square, circle]
                 size: [small, medium, large]
                 include:
+                    - weight: 250g
                     - colour: red
                       shape: circle
                       size: medium
