@@ -49,7 +49,7 @@ jobs:
                 size: [small, medium, large]
                 include:
                     - colour: red
-                      shape: green
+                      shape: circle
                       size: medium
                     - colour: blue
                       shape: circle
