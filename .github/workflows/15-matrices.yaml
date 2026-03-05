@@ -7,6 +7,7 @@ jobs:
         name: Test on Node.js ${{ matrix.node-version }} on OS ${{ matrix.OS }}
         runs-on: ${{ matrix.OS }}
         strategy:
+            fail-fast: false
             matrix:
                 # within matrix, if one job failed, the others will be skipped or marked as failed, depending on the configuration; also we can specify the max number of parallel jobs to run
                 node-version: [18.x, 22.x, 24.x]
