@@ -1,6 +1,26 @@
 name: Update NPM dependencies
 description: check if there are updates for npm dependencies and create a pull request with updated package.json and package-lock.json files
 
+inputs:
+  base-branch:
+    description: Base branch for the pull request
+    required: false
+    default: main
+  target-branch:
+    description: Target branch for the pull request
+    required: false
+    default: update-dependencies
+  working-directory:
+    description: Working directory for the Node.js project
+    required: true
+  gh-token:
+    description: GitHub token for authentication
+    required: true
+  debug:
+    description: Whether to output debug messages to the console
+    required: false
+    default: "false"
+
 runs:
   using: "node20"
   main: "index.js"
