@@ -1,0 +1,35 @@
+name: Cache Node and NPM dependencies
+description: A workflow to demonstrate caching of Node.js and NPM dependencies using GitHub Actions based on the package-lock.json file.
+
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: true
+    default: '20.x'
+  working-dir:
+    description: 'Working directory for the Node.js project'
+    required: false
+    default: .
+runs:
+  # defien which type of customised action we want to create; in this case, we are creating a composite action that can be reused across multiple workflows; also we can define inputs and outputs for the action, and we can use those inputs and outputs in the steps of the action
+  using: "composite" 
+  steps:
+    - name: Setup Node.js version ${{ inputs.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Cache Node.js dependencies
+      id: cache
+      uses: actions/cache@v3
+      with:
+        # the step will fail siliently if the cache is not found, so we can check the output to see if it was a hit or miss; also to check the correctness of path directory
+        path: ${{ inputs.working-dir }}/node_modules
+        # key: node-modules-${{hashfiles('${{ inputs.working-dir }}/package-lock.json')}}
+        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+        # key: deps-node-modules-${{ hashFiles(format('{0}/package-lock.json', inputs.working-dir)) }}
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci
+      # we need to define the shell when creating customized actions, because the default shell for composite actions is sh, and some commands may not work properly in sh; also we can specify the working directory for the run step, so that we don't have to change the directory in the command itself
+      shell: bash 
+      working-directory: ${{ inputs.working-dir }}

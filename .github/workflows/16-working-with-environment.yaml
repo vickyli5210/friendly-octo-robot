@@ -2,10 +2,10 @@ name: 16 - Working With Environment
 run-name: 16-Working With Environment | Target Environment - ${{ inputs.target-environment }}
 on:
     workflow_dispatch:
-        inputs:
-            target-environment:
-                type: environment
-                default: staging
+        # inputs:
+        #     target-environment:
+        #         type: environment
+        #         default: staging
 jobs:
     deploy-staging:
         runs-on: ubuntu-latest
