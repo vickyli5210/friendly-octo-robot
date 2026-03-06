@@ -24,7 +24,7 @@ async function run(){
         core.setFailed(`Invalid target branch name: ${targetBranch}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
         return;
     }
-    if (!validateDirectoryName(workingDir)) {
+    if (!validateDirectoryName(workingDirectory)) {
         core.setFailed(`Invalid working directory name: ${workingDir}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
         return;
     }
