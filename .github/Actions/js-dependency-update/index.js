@@ -3,7 +3,7 @@ const exec = require('@actions/exec');
 // Note: Allows only letters, numbers, `_`, `-`, `.`, and `/` in branch names as a basic safety check.
 const validateBranchName = (branchName) => /^[a-zA-Z0-9_\-\.\/]+$/.test(branchName);
 // Note: Allowlist validation helps reduce script-injection risk by rejecting shell metacharacters in path-like inputs.
-const validateDirectoryName = (directoryName) => /^[a-zA-Z0-9_\-\/]+$/.test(directoryName);
+const validateDirectoryName = (directoryName) => /^[a-zA-Z0-9_\-\.\/]+$/.test(directoryName);
 
 async function run(){
     const baseBranch = core.getInput('base-branch');
@@ -23,7 +23,7 @@ async function run(){
         return;
     }
     if (!validateDirectoryName(workingDir)) {
-        core.setFailed(`Invalid working directory name: ${workingDir}; only letters, numbers, '_', '-', and '/' are allowed.`);
+        core.setFailed(`Invalid working directory name: ${workingDir}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
         return;
     }
     core.info(`Inputs - baseBranch: ${baseBranch}, targetBranch: ${targetBranch}, workingDir: ${workingDir}, debug: ${debug}`);
