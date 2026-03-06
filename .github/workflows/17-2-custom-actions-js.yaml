@@ -14,4 +14,5 @@ jobs:
               uses: actions/checkout@v4
             - name: Update NPM dependencies
               uses: ./.github/Actions/js-dependency-update
-           
+#   Keep the install step (npm ci) before using the local action, or
+#   Bundle the JS action into index.js and point main to that (recommended for JS actions).

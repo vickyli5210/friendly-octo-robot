@@ -17,6 +17,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!.github/Actions/**/lib/
 lib64/
 parts/
 sdist/
