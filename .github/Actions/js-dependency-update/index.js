@@ -8,12 +8,14 @@ const validateDirectoryName = (directoryName) => /^[a-zA-Z0-9_\-\.\/]+$/.test(di
 async function run(){
     const baseBranch = core.getInput('base-branch');
     const targetBranch = core.getInput('target-branch');
-    const githubToken = core.getInput('github-token');
-    const workingDir = core.getInput('working-dir');
+    const githubToken = core.getInput('gh-token');
+    const workingDir = core.getInput('working-directory', { required: true });
     const debug = core.getBooleanInput('debug');
 
     // Note: setSecret masks this token in workflow logs (redaction); it does not validate scope/permissions.
-    core.setSecret(githubToken);
+    if (githubToken) {
+        core.setSecret(githubToken);
+    }
     if (!validateBranchName(baseBranch)) {
         core.setFailed(`Invalid base branch name: ${baseBranch}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
         return;

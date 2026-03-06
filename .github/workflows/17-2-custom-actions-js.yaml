@@ -41,7 +41,7 @@ jobs:
                 base-branch: ${{ inputs.base-branch }}
                 target-branch: ${{ inputs.target-branch }}
                 working-directory: ${{ inputs.working-directory }}
-                # gh-token: ${{ inputs.gh-token }}
-                # debug: ${{ inputs.debug }}
+                gh-token: ${{ secrets.GITHUB_TOKEN }}
+                debug: 'false'
 #   Keep the install step (npm ci) before using the local action, or
 #   Bundle the JS action into index.js and point main to that (recommended for JS actions).
