@@ -9,7 +9,15 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "_notes": {
+    "@actions/core": "Provides core APIs for inputs, outputs, logging, and failures in GitHub Actions.",
+    "@actions/exec": "Runs shell commands from the action code.",
+    "@actions/github": "Provides GitHub context and API helpers (Octokit).",
+    "versioning": "Exact versions (1.10.1, 1.1.1) are pinned; ^9.0.0 allows minor/patch updates within major version 9."
+  },
   "dependencies": {
-    "@actions/core": "1.10.1"
+    "@actions/core": "1.10.1",
+    "@actions/exec": "1.1.1",
+    "@actions/github": "^9.0.0"
   }
 }
