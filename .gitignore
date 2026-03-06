@@ -1,0 +1,2 @@
+node_modules/
+!.github/Actions/**/node_modules/
