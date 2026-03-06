@@ -1,7 +1,17 @@
 name: 17-Custom-Actions-Composite
+run-name: 17-1-Custom-Actions-Composite | Target Environment - ${{ inputs.target-environment }}
 on:
     workflow_dispatch:
-env:
+    inputs:
+        target-environment:
+            description: 'Target environment for the build (e.g., development, staging, production)'
+            type: choice
+            options:
+                - development
+                - staging
+                - production
+            default: development
+env:    
   working-dir: 17-custom-actions/react-app
 jobs:
     build:
@@ -19,6 +29,7 @@ jobs:
               with:
                 node-version: '20.x'
                 working-dir: ${{ env.working-dir }}
+                target-env: ${{ inputs.target-environment }}
             - name: Test
               run: npm test
               working-directory: ${{ env.working-dir }}

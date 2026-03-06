@@ -10,6 +10,10 @@ inputs:
     description: 'Working directory for the Node.js project'
     required: false
     default: .
+  target-env:
+    description: 'Target environment for the build (e.g., development, staging, production)'
+    required: false
+    default: development
 runs:
   # defien which type of customised action we want to create; in this case, we are creating a composite action that can be reused across multiple workflows; also we can define inputs and outputs for the action, and we can use those inputs and outputs in the steps of the action
   using: "composite" 
@@ -28,8 +32,9 @@ runs:
         # key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
         key: deps-node-modules-${{ hashFiles(format('{0}/package-lock.json', inputs.working-dir)) }}
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: npm ci
+      if: steps.cache.outputs.cache-hit != 'true' 
+      # Note: Runs `npm ci` for development, otherwise runs `npm ci --omit=dev` for non-development environments.
+      run: ${{ inputs.target-env == 'development' && 'npm ci' || 'npm ci --omit=dev' }}
       # we need to define the shell when creating customized actions, because the default shell for composite actions is sh, and some commands may not work properly in sh; also we can specify the working directory for the run step, so that we don't have to change the directory in the command itself
       shell: bash 
       working-directory: ${{ inputs.working-dir }}
