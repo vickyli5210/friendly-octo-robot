@@ -1,0 +1,24 @@
+name: 17-Custom-Actions-Composite
+on:
+    workflow_dispatch:
+env:
+    working-dir: 17-custom-actions-composite/react-app
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                # this default working directory is not applied to the steps that use a custom action, because the custom action has its own working directory defined in the action.yaml file; also we can override the working directory for a specific step, and it will take precedence over the default working directory defined at the job level
+                working-directory: ${{ env.working-dir }}
+        steps:
+            # check out the code form repo and to find the custom action defined in the repo, we can use the custom action in the same repository by referencing the path to the action; also we can use custom actions defined in other repositories by referencing the repository and the path to the action within that repository; also we can use actions from the GitHub marketplace by referencing the repository and the version of the action
+            - name: Checkout Repository
+              uses: actions/checkout@v5
+            - name: setup node and npm dependencies
+              uses: ./.github/actions/composite-action-deps
+              with:
+                node-version: '20.x'
+                working-dir: ${{ env.working-dir }}
+            - name: Test
+              run: npm test
+              working-directory: ${{ env.working-dir }}
