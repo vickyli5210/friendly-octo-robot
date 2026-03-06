@@ -31,11 +31,11 @@ async function run(){
     core.info(`Inputs - baseBranch: ${baseBranch}, targetBranch: ${targetBranch}, workingDir: ${workingDir}, debug: ${debug}`);
     await exec.exec('npm', ['update'], { cwd: workingDir });
 
-    // const gitStatusOutput = await exec.getExecOutput('git', ['status', '-s', 'package*.json'], { cwd: workingDir });
-    // if (gitStatusOutput.stdout.trim() === '') {
-    //     core.info('No dependency updates found. Exiting action.');
-    //     return;
-    // }
+    const gitStatusOutput = await exec.getExecOutput(
+        'git',
+        ['status', '--porcelain', '--', 'package.json', 'package-lock.json'],
+        { cwd: workingDir }
+    );
     if (gitStatusOutput.stdout.trim().length > 0) {
         core.info(' [JS-dependency-update] Dependency updates detected, proceeding to commit and create PR.');
     }else {
