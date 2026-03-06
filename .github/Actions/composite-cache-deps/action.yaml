@@ -30,7 +30,7 @@ runs:
         path: ${{ inputs.working-dir }}/node_modules
         # the below is the hash for all package-lock.json files in the repository, so it can be used for caching dependencies in different working directories; also we can use the hash of a specific package-lock.json file by providing the path to that file
         # key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-        key: deps-node-modules-${{ hashFiles(format('{0}/package-lock.json', inputs.working-dir)) }}
+        key: deps-node-modules-${{ inputs.target-env }}-${{ hashFiles(format('{0}/package-lock.json', inputs.working-dir)) }}
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true' 
       # Note: Runs `npm ci` for development, otherwise runs `npm ci --omit=dev` for non-development environments.
