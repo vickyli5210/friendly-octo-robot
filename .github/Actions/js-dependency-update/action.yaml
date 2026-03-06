@@ -1,0 +1,8 @@
+name: Update NPM dependencies
+description: check if there are updates for npm dependencies and create a pull request with updated package.json and package-lock.json files
+
+runs:
+  using: "node20"
+  main: "index.js"
+
+# There are two common ways to make dependencies available: (1) install them during the workflow run (for example with npm ci), or (2) for a JavaScript action, bundle dependencies into the built action file (for example dist/index.js via @vercel/ncc); committing node_modules to git is generally not recommended.
