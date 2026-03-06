@@ -40,6 +40,8 @@ async function run(){
         core.info(' [JS-dependency-update] No dependency updates detected after npm update. Exiting action.');
         return;
     }
+
+    /*
     1. Parse inputs:
         1.1 base-branch from which to check for update
         1.2 target-branch to create for the PR for update
