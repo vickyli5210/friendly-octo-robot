@@ -2,7 +2,30 @@ name: 17-Custom-Actions-JS
 run-name: 17-2-Custom-Actions-JS 
 on:
     workflow_dispatch:
-    
+inputs:
+    base-branch:
+        description: 'Base branch for the pull request'
+        type: string
+        default: main
+        required: false
+    target-branch:
+        description: 'Target branch for the pull request'
+        type: string
+        default: update-dependencies
+        required: false
+    working-directory:
+        description: 'Working directory for the Node.js project'
+        type: string
+        default: 17-custom-actions/react-app
+        required: true
+    gh-token:
+        description: 'GitHub token for authentication; must have write access to content and pull-request scopes'
+        type: string
+        default: ${{ secrets.GITHUB_TOKEN }}
+        required: true
+    debug:
+        description: 'Whether the output debug messages to the console'
+        default: "false"
 env:    
   working-dir: 17-custom-actions/react-app
 jobs:

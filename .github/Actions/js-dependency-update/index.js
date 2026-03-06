@@ -1,6 +1,15 @@
 const core = require('@actions/core');
-
+const validateBranchName = (branchName) => /^[a-zA-Z0-9_\-\.\/]+$/.test(branchName)){
+}
 async function run(){
+    const baseBranch = core.getInput('base-branch');
+    const targetBranch = core.getInput('target-branch');
+    const githubToken = core.getInput('github-token');
+    const workingDir = core.getInput('working-dir');
+    const debug = core.getBooleanInput('debug');
+
+    core.setSecret(githubToken);
+
     /*
     1. Parse inputs:
         1.1 base-branch from which to check for update
