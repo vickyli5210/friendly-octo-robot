@@ -18,16 +18,16 @@ on:
                 type: string
                 default: 17-custom-actions/react-app
                 required: true
-            # gh-token:
-            #     description: 'GitHub token for authentication; must have write access to content and pull-request scopes'
-            #     type: string
-            #     default: ${{ secrets.GITHUB_TOKEN }}
-            #     required: true
-            # debug:
-            #     description: 'Whether the output debug messages to the console'
-            #     default: "false"
+            debug:
+                description: 'Whether the output debug messages to the console'
+                default: "false"
 env:    
   working-dir: 17-custom-actions/react-app
+
+permissions:
+    contents: write # to create pull request
+    pull-requests: write # to create pull request
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -41,7 +41,11 @@ jobs:
                 base-branch: ${{ inputs.base-branch }}
                 target-branch: ${{ inputs.target-branch }}
                 working-directory: ${{ inputs.working-directory }}
-                gh-token: ${{ secrets.GITHUB_TOKEN }}
+                gh-token: ${{ secrets.GITHUB_TOKEN }} 
+                # THIS TOKEN IS ONLY VALID FOR CURRENT REPO; 
+                # if we want to access other repos, we need to create a personal access token and add it to the secrets, and use that token here; 
+                # also we can specify the permissions for the GITHUB_TOKEN in the workflow file, for example, we can give it read access to the contents and write access to the pull-requests, so that it can create a pull request with the updated dependencies; also we can use the default GITHUB_TOKEN for authentication when using actions from the GitHub marketplace, because those actions are designed to work with the default token; also we can use a custom token for authentication when using custom actions defined in our repository, because we have control over those actions and can design them to work with a custom token
+
                 debug: 'false'
 #   Keep the install step (npm ci) before using the local action, or
 #   Bundle the JS action into index.js and point main to that (recommended for JS actions).
