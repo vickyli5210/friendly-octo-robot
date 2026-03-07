@@ -8,9 +8,9 @@ const validateDirectoryName = (directoryName) => /^[a-zA-Z0-9_\-\.\/]+$/.test(di
 
 async function run(){
     // another safety measure; if there is no default defined in action.yaml, the getInput will return an empty string, which will fail the validation and prevent potential command injection; if there is a default defined in action.yaml, it will be used if the input is not provided, and it should also pass the validation if it's a valid branch name or directory name., so it adds an extra layer of safety by ensuring that even default values are validated.
-    const baseBranch = core.getInput('base-branch',[{ required: true }]);
+    const baseBranch = core.getInput('base-branch', { required: true });
     const targetBranch = core.getInput('target-branch',{ required: true });
-    const githubToken = core.getInput('gh-token',[{ required: true }]);
+    const githubToken = core.getInput('gh-token', { required: true });
     const workingDir = core.getInput('working-directory', { required: true });
     const debug = core.getBooleanInput('debug');
 
@@ -42,8 +42,8 @@ async function run(){
     );
     if (gitStatusOutput.stdout.trim().length > 0) {
         core.info(' [JS-dependency-update] Dependency updates detected, proceeding to commit and create PR.');
-        await exec.exec('git', ['config', '--global', 'user.name', '"gh-automation"']);
-        await exec.exec('git', ['config', '--global', 'user.email', '"gh-automation@example.com"']);
+        await exec.exec('git', ['config', '--global', 'user.name', 'gh-automation']);
+        await exec.exec('git', ['config', '--global', 'user.email', 'gh-automation@example.com']);
         await exec.exec('git', ['checkout', '-b', targetBranch], { ...commonExecOpts });
         await exec.exec('git', ['add', 'package.json', 'package-lock.json'], { ...commonExecOpts });
         await exec.exec('git', ['commit', '-m', 'Update JavaScript dependencies'], { ...commonExecOpts });
