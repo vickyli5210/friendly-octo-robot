@@ -25,3 +25,19 @@ The action can now authenticate correctly with Octokit and use the proper reposi
 ## Related errors seen earlier
 - `ReferenceError: gitStatusOutput is not defined` (fixed by restoring the `gitStatusOutput` assignment before use).
 - Input mismatch errors (`workingDir` vs `working-directory`, `github-token` vs `gh-token`) causing invalid/empty input behavior.
+
+## Additional finding (why PR still was not created)
+The workflow run was executing the version of the local action from the `main` branch, not the newer implementation containing commit/push/PR creation steps.
+
+### Evidence
+- Logs stopped after dependency detection and final info line, with no `git checkout`, `git push`, or Octokit PR API logs.
+- The `main` version of `.github/Actions/js-dependency-update/index.js` ended after update detection and did not include PR-creation flow.
+
+### Resolution
+- Run the workflow from the branch that contains the updated action code, **or**
+- Merge/cherry-pick the updated action file into `main` and rerun.
+
+### Expected logs after fix
+- `git checkout ...`
+- `git push ...`
+- PR creation success log (or explicit API error message).
