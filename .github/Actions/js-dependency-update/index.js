@@ -28,17 +28,17 @@ async function run(){
         core.setFailed(`Invalid target branch name: ${targetBranch}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
         return;
     }
-    if (!validateDirectoryName(workingDir)) {
-        core.setFailed(`Invalid working directory name: ${workingDir}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
+    if (!validateDirectoryName(workingDirectory)) {
+        core.setFailed(`Invalid working directory name: ${workingDirectory}; only letters, numbers, '_', '-', '.', and '/' are allowed.`);
         return;
     }
-    core.info(`Inputs - baseBranch: ${baseBranch}, targetBranch: ${targetBranch}, workingDir: ${workingDir}, debug: ${debug}`);
-    await exec.exec('npm', ['update'], { ...commonExecOpts });
+    core.info(`Inputs - baseBranch: ${baseBranch}, targetBranch: ${targetBranch}, workingDir: ${workingDirectory}, debug: ${debug}`);
+    await exec.exec('npm', ['update'], { cwd: workingDirectory });
 
     const gitStatusOutput = await exec.getExecOutput(
         'git',
         ['status', '--porcelain', '--', 'package.json', 'package-lock.json'],
-        { ...commonExecOpts }
+        { cwd: workingDirectory }
     );
     if (gitStatusOutput.stdout.trim().length > 0) {
         core.info(' [JS-dependency-update] Dependency updates detected, proceeding to commit and create PR.');
