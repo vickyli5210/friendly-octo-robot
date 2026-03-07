@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const { GitHub } = require('@actions/github/lib/utils');
-const
+const github = require('@actions/github');
 // Note: Allows only letters, numbers, `_`, `-`, `.`, and `/` in branch names as a basic safety check.
 const validateBranchName = (branchName) => /^[a-zA-Z0-9_\-\.\/]+$/.test(branchName);
 // Note: Allowlist validation helps reduce script-injection risk by rejecting shell metacharacters in path-like inputs.
@@ -52,11 +51,11 @@ async function run(){
         await exec.exec('git', ['push', 'origin', targetBranch, '--force'], { ...commonExecOpts });
         // Note: The PR creation step is simplified here; in a production action, you would use the GitHub API (e.g., via octokit) to create a PR with proper error handling and messaging.
     
-    const octokit = githubToken.getOctokit(githubToken);
+    const octokit = github.getOctokit(githubToken);
         try{
             await octokit.rest.pulls.create({
-            owner: GitHub.context.repo.owner,
-            repo: GitHub.context.repo.repo,
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
             title: `Update JS dependencies - ${targetBranch}`,
             head: targetBranch,
             base: baseBranch,
